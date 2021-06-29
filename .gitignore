@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/EventManager.Core/bin/Debug/netstandard2.1
+/EventManager.Application/bin/Debug/netstandard2.1
+/EventManager.Application/obj
+/EventManager.Core/obj
+/EventManager.Infrastructure/bin/Debug/netstandard2.1
+/EventManager.Infrastructure/obj

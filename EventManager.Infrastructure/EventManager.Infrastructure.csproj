@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EventManager.Application\EventManager.Application.csproj" />
+    <ProjectReference Include="..\EventManager.Core\EventManager.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
