@@ -14,4 +14,8 @@ namespace EventManager.App.Contracts.Requests
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }
+
+    public class UpdateEventRequest : EventRequest
+    {
+    }
 }

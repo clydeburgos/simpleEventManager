@@ -65,5 +65,11 @@ namespace EventManager.Infrastructure
                 await _eventContext.SaveChangesAsync();
             }
         }
+
+        public async Task<bool> CheckIfDuplicate(string propertyValue)
+        {
+            var isDuplicate = await _eventContext.Events.Where(e => e.EventName.ToLower().Equals(propertyValue.ToLower())).CountAsync();
+            return isDuplicate > 0;
+        }
     }
 }

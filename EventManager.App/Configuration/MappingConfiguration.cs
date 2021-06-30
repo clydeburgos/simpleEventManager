@@ -13,6 +13,8 @@ namespace EventManager.App.Configuration
         {
             CreateMap<EventRequest, Event>().ReverseMap();
             CreateMap<EventResponse, Event>().ReverseMap();
+
+            CreateMap<UpdateEventRequest, Event>().ReverseMap();
         }
     }
 }

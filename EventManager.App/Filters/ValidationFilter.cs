@@ -1,8 +1,6 @@
 ﻿using EventManager.App.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +13,7 @@ namespace EventManager.App.Filters
             if (!context.ModelState.IsValid) {
                 var errors = context.ModelState.Where(e => e.Value.Errors.Any())
                     .ToDictionary(c => c.Key, c => c.Value.Errors.Select(x => x.ErrorMessage))
-                    .ToArray();
+                    .ToList();
 
                 var errorResponse = new ErrorResponse();
 
