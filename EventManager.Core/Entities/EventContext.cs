@@ -21,7 +21,7 @@ namespace EventManager.Domain.Entities
                 int randomNumber = Faker.RandomNumber.Next(1, 100);
                 string companyName = Faker.Company.Name();
                 string address = $"{ Faker.Address.Country() }, { Faker.Address.City() }";
-                string eventName =  $" { companyName } 's { randomNumber } rd/th Annual Conference";
+                string eventName =  $"{ companyName } 's { randomNumber } rd/th Annual Conference";
                 string eventDescription = $"{eventName} at { address } - { Faker.Company.CatchPhrase().ToUpper() }. ";
 
                 string[] zones = TZNames.GetTimeZoneIdsForCountry("AU");

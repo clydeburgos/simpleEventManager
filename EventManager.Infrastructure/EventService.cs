@@ -32,6 +32,10 @@ namespace EventManager.Infrastructure
 
         public async Task Add(Event eventEntity)
         {
+            eventEntity.Identifier = Guid.NewGuid();
+            eventEntity.CreatedDate = DateTime.Now;
+            eventEntity.ModifiedDate = DateTime.Now;
+
             _eventContext.Events.Add(eventEntity);
             await _eventContext.SaveChangesAsync();
         }
@@ -51,7 +55,6 @@ namespace EventManager.Infrastructure
 
             if (dbEventEntity != null) 
             {
-
                 dbEventEntity.EventName = eventEntity.EventName;
                 dbEventEntity.EventDescription = eventEntity.EventDescription;
                 dbEventEntity.EventTimezone = eventEntity.EventTimezone;
