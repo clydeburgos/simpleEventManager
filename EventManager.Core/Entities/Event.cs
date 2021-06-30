@@ -11,14 +11,10 @@ namespace EventManager.Domain.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Identifier { get; set; }
-        [Required]
         public string EventName { get; set; }
-        [Required]
         public string EventDescription { get; set; }
         public string EventTimezone { get; set; }
-        [Required]
         public DateTime StartDate { get; set; }
-        [Required]
         public DateTime EndDate { get; set; }
     }
 }

@@ -8,3 +8,4 @@
 /EventManager.Core/obj
 /EventManager.Infrastructure/bin/Debug/netstandard2.1
 /EventManager.Infrastructure/obj
+/.vs

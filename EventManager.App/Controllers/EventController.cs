@@ -1,4 +1,7 @@
-﻿using EventManager.Application.Interfaces;
+﻿using AutoMapper;
+using EventManager.App.Contracts.Requests;
+using EventManager.App.Contracts.Responses;
+using EventManager.Application.Interfaces;
 using EventManager.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,86 +14,65 @@ namespace EventManager.App.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IDataRepository<Event> _dataRepository;
         private const string EVENT_NULL = "Event is null.";
         private const string EVENT_DOES_NOT_EXIST = "The Event doesn't not exist";
         private const string EVENT_DATA_INCORRECT = "Make sure you have filled in all the fields with the correct value and format.";
 
-        public EventController(IDataRepository<Event> dataRepository)
+        public EventController(IMapper mapper, IDataRepository<Event> dataRepository)
         {
+            _mapper = mapper;
             _dataRepository = dataRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            IEnumerable<Event> employees = await _dataRepository.GetAll();
-            return Ok(employees);
+            var eventsData = await _dataRepository.GetAll();
+            var eventsResponse = _mapper.Map<List<EventResponse>>(eventsData);
+            return Ok(eventsResponse);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             var eventData = await _dataRepository.Get(id);
-
             if (eventData == null)
             {
                 return NotFound(EVENT_NULL);
             }
 
-            return Ok(eventData);
+            var eventResponse = _mapper.Map<EventResponse>(eventData);
+            return Ok(eventResponse);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Event eventData)
+        public async Task<IActionResult> Post([FromBody] EventRequest eventData)
         {
-            if (eventData == null)
-            {
-                return BadRequest(EVENT_NULL);
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(EVENT_DATA_INCORRECT);
-            }
-
-            await _dataRepository.Add(eventData);
+            var eventPayload = _mapper.Map<Event>(eventData);
+            await _dataRepository.Add(eventPayload);
             return Ok();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] Event eventData)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] EventRequest eventData)
         {
-            if (eventData == null)
-            {
-                return BadRequest(EVENT_NULL);
-            }
-
-            if (!ModelState.IsValid) 
-            {
-                return BadRequest(EVENT_DATA_INCORRECT);
-            }
-
-            var eventToUpdate = await _dataRepository.Get(id);
-            if (eventToUpdate == null)
-            {
-                return NotFound(EVENT_DOES_NOT_EXIST);
-            }
-
-            await _dataRepository.Update(eventToUpdate, eventData);
+            var eventPayload = _mapper.Map<Event>(eventData);
+            await _dataRepository.Update(eventPayload);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var employee = await _dataRepository.Get(id);
-            if (employee == null)
+            var eventData = await _dataRepository.Get(id);
+            if (eventData == null)
             {
-                return NotFound(EVENT_DOES_NOT_EXIST);
+                return NotFound(EVENT_NULL);
             }
 
-            await _dataRepository.Delete(employee);
+            await _dataRepository.Delete(id);
             return Ok();
         }
     }

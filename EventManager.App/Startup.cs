@@ -1,3 +1,5 @@
+using EventManager.App.Filters;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
@@ -5,6 +7,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace EventManager.App
 {
@@ -20,8 +23,15 @@ namespace EventManager.App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews(
+                    options => {
+                        options.Filters.Add<ValidationFilter>();
+                    })
+                    .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<Startup>());
+
             services.AddEventServices(Configuration);
-            services.AddControllersWithViews();
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

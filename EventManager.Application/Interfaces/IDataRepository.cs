@@ -10,7 +10,7 @@ namespace EventManager.Application.Interfaces
         Task<IEnumerable<TEntity>> GetAll();
         Task<TEntity> Get(Guid id);
         Task Add(TEntity entity);
-        Task Update(TEntity dbEntity, TEntity entity);
-        Task Delete(TEntity entity);
+        Task Update(TEntity entity);
+        Task Delete(Guid id);
     }
 }

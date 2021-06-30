@@ -36,22 +36,31 @@ namespace EventManager.Infrastructure
             await _eventContext.SaveChangesAsync();
         }
 
-        public async Task Delete(Event eventEntity)
+        public async Task Delete(Guid id)
         {
-            _eventContext.Events.Remove(eventEntity);
-            await _eventContext.SaveChangesAsync();
+            var dbEventEntity = await Get(id);
+            if (dbEventEntity != null) {
+                _eventContext.Events.Remove(dbEventEntity);
+                await _eventContext.SaveChangesAsync();
+            }
         }
 
-        public async Task Update(Event dbEventEntity, Event eventEntity)
+        public async Task Update(Event eventEntity)
         {
-            dbEventEntity.EventName = eventEntity.EventName;
-            dbEventEntity.EventDescription = eventEntity.EventDescription;
-            dbEventEntity.EventTimezone = eventEntity.EventTimezone;
-            dbEventEntity.StartDate = eventEntity.StartDate;
-            dbEventEntity.EndDate = eventEntity.EndDate;
-            dbEventEntity.ModifiedDate =DateTime.Now;
+            var dbEventEntity = await Get(eventEntity.Identifier);
 
-            await _eventContext.SaveChangesAsync();
+            if (dbEventEntity != null) 
+            {
+
+                dbEventEntity.EventName = eventEntity.EventName;
+                dbEventEntity.EventDescription = eventEntity.EventDescription;
+                dbEventEntity.EventTimezone = eventEntity.EventTimezone;
+                dbEventEntity.StartDate = eventEntity.StartDate;
+                dbEventEntity.EndDate = eventEntity.EndDate;
+                dbEventEntity.ModifiedDate = DateTime.Now;
+
+                await _eventContext.SaveChangesAsync();
+            }
         }
     }
 }
