@@ -63,11 +63,12 @@ namespace EventManager.App.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] UpdateEventRequest eventData)
         {
-            var dupCheckResult = await CheckDuplicate(eventData.EventName);
-            if (dupCheckResult != null)
-            {
-                return BadRequest(dupCheckResult);
-            }
+            //@TODO : Handle dup on update
+            //var dupCheckResult = await CheckDuplicate(eventData.EventName);
+            //if (dupCheckResult != null)
+            //{
+            //    return BadRequest(dupCheckResult);
+            //}
 
             var eventPayload = _mapper.Map<Event>(eventData);
             await _dataRepository.Update(eventPayload);
@@ -88,7 +89,8 @@ namespace EventManager.App.Controllers
         }
 
         private async Task<ExpandoObject> CheckDuplicate(string propertyValue) {
-            if (await _dataRepository.CheckIfDuplicate(propertyValue))
+            var duplicate = await _dataRepository.CheckIfDuplicate(propertyValue);
+            if (duplicate != null)
             {
                 //@TODO : Transfer elsewhere
                 dynamic response = new ExpandoObject();

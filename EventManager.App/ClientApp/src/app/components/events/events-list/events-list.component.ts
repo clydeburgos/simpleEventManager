@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { GridComponent, PageSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { EventModel } from 'src/app/models/event.model';
@@ -18,6 +18,8 @@ export class EventsListComponent implements OnInit {
   public dateFormat: any = { type:"date", format:"yyyy-MM-dd" }; 
   
   @ViewChild('eventsGrid', { static : false }) public grid: GridComponent;
+  @Output() showDetailEventEmit = new EventEmitter();
+
   public selectedRowData: any;
 
   public pageSettings: PageSettingsModel;
@@ -55,20 +57,7 @@ export class EventsListComponent implements OnInit {
    }
 
   viewDetails(data){
-    // this.windowService.open(CustomerTemplateDetailsComponent, {
-    //   title : `View / Edit Template`,
-    //   context :
-    //   {
-    //     command: 1,
-    //     templateData: data
-    //   }
-    // }).onClose.subscribe(() => {
-    //   this.templateEventEmmit.emit({ command : 'refresh'});
-    //   setTimeout(() => {
-    //     this.getCustomerTemplates();
-    //   }, 1000);
-
-    // });
+    this.showDetailEventEmit.emit(data);
   }
 
   delete(data){
@@ -84,6 +73,7 @@ export class EventsListComponent implements OnInit {
 
     this.eventService.delete(data.identifier).subscribe((res) => {
       this.getEvents();
+      this.showDetailEventEmit.emit(null);
     });
   }
 }

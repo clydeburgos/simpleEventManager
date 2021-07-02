@@ -3,6 +3,6 @@
     <button class="btn btn-outline-secondar" (click)="cancel()" *ngIf="managerView">CLOSE MANAGER</button>
 </div>
 <div class="manager" *ngIf="managerView">
-    <app-events-manager [data]="eventData" (savedEventEmit)="savedEventEmit($event)"></app-events-manager>
+    <app-events-manager [data]="eventData" (savedEventEmit)="savedEventEmit($event)" #eventsManager></app-events-manager>
 </div>
-<app-events-list #eventList></app-events-list>
+<app-events-list #eventList (showDetailEventEmit)="showDetailEventEmit($event)"></app-events-list>

@@ -66,10 +66,10 @@ namespace EventManager.Infrastructure
             }
         }
 
-        public async Task<bool> CheckIfDuplicate(string propertyValue)
+        public async Task<Event> CheckIfDuplicate(string propertyValue)
         {
-            var isDuplicate = await _eventContext.Events.Where(e => e.EventName.ToLower().Equals(propertyValue.ToLower())).CountAsync();
-            return isDuplicate > 0;
+            var isDuplicate = await _eventContext.Events.Where(e => e.EventName.ToLower().Equals(propertyValue.ToLower())).FirstOrDefaultAsync();
+            return isDuplicate;
         }
     }
 }

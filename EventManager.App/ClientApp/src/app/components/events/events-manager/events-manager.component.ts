@@ -23,7 +23,15 @@ export class EventsManagerComponent implements OnInit {
   }
 
   ngOnInit(){
-    if(this.eventData) this.model = this.eventData;
+    this.setData();
+  }
+
+  setData(){
+    if(this.eventData) {
+      this.model = this.eventData;
+      this.model.startDate = new Date(this.eventData.startDate).toISOString().split('T')[0];
+      this.model.endDate = new Date(this.eventData.endDate).toISOString().split('T')[0];
+    }
     this.isNew = !this.eventData;
   }
 

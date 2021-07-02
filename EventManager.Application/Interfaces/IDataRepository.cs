@@ -13,6 +13,6 @@ namespace EventManager.Application.Interfaces
         Task Update(TEntity entity);
         Task Delete(Guid id);
 
-        Task<bool> CheckIfDuplicate(string propertyValue);
+        Task<TEntity> CheckIfDuplicate(string propertyValue);
     }
 }
