@@ -1,0 +1,21 @@
+<ejs-grid id="eventsGrid" #eventsGrid width="100%                                                                                      "
+    [dataSource]="events" [allowPaging]="true" [allowSorting]="true"
+    [showColumnChooser]="true" [allowReordering]="true" [allowResizing]="true"
+    [allowFiltering]="true" [pageSettings]="pageSettings" [filterSettings]='filterOptions' 
+    (rowSelected)="rowSelected($event)" 
+    (rowDataBound)='rowDataBound($event)'>
+    <e-columns>
+        <!-- <e-column field='identifier' headerText='ID' textAlign='Left'></e-column> -->
+        <e-column field='eventName' headerText='Event Name'></e-column>
+        <e-column field='eventTimezone' headerText='Time Zone'></e-column>
+        <e-column field='startDate' headerText='Start' [format]="dateFormat" type="date" textAlign='Right'></e-column>
+        <e-column field='endDate' headerText='End' [format]="dateFormat" type="date" textAlign='Right'></e-column>
+        <e-column field='id' headerText='Actions' textAlign='Left' allowFiltering="false" width="160">
+            <ng-template #template let-data>
+              <a href="javascript:void(0)" (click)="viewDetails(data)"><span class="badge badge-light p-2">DETAILS</span></a>
+              &nbsp;
+              <a href="javascript:void(0)" (click)="delete(data)"><span class="badge badge-danger p-2">REMOVE</span></a>
+            </ng-template>
+          </e-column>
+    </e-columns>
+</ejs-grid>

@@ -1,0 +1,8 @@
+<div class="menu d-flex pb-2 pt-2">
+    <button class="btn btn-outline-primary" (click)="create()" [disabled]="managerView">CREATE A NEW RECORD</button> &nbsp; 
+    <button class="btn btn-outline-secondar" (click)="cancel()" *ngIf="managerView">CLOSE MANAGER</button>
+</div>
+<div class="manager" *ngIf="managerView">
+    <app-events-manager [data]="eventData" (savedEventEmit)="savedEventEmit($event)"></app-events-manager>
+</div>
+<app-events-list #eventList></app-events-list>

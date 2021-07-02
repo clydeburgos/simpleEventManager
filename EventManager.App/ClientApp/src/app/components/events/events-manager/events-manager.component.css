@@ -1,0 +1,15 @@
+#eventDescription {
+    height: 110px;
+}
+
+label {
+    font-size: 14px;
+}
+
+#saveBtn {
+    width: 200px;
+}
+
+.list-group-item {
+    border: none!important;
+}
